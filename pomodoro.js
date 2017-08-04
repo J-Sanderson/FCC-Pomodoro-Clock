@@ -57,26 +57,29 @@ $(document).ready(function() {
 
   //60000 ms in one minute
   $("#start").click(function() {
-    running = true;
-    working = true;
-    //get number of seconds in work and break sessions
-    workLen = parseInt($("input[name=timer]").val()) * 60;
-    breakLen = parseInt($("input[name=break]").val()) * 60;
-    //set the timers that will decrement
-    workTimer = workLen;
-    breakTimer = breakLen;
-    //set initial status message and timer
-    $("#status").empty().append("<p>Working</p>");
-    $("#idle").empty().append("<p>" + convertMinutes(workTimer) + "</p>");
+    //only act if not running
+    if (!running) {
+      running = true;
+      working = true;
+      //get number of seconds in work and break sessions
+      workLen = parseInt($("input[name=timer]").val()) * 60;
+      breakLen = parseInt($("input[name=break]").val()) * 60;
+      //set the timers that will decrement
+      workTimer = workLen;
+      breakTimer = breakLen;
+      //set initial status message and timer
+      $("#status").empty().append("<p>Working</p>");
+      $("#idle").empty().append("<p>" + convertMinutes(workTimer) + "</p>");
 
-    //perform a check every second
-    var secondCheck = setInterval(tick, 1000);
+      //perform a check every second
+      var secondCheck = setInterval(tick, 1000);
 
-    $("#stop").click(function() {
-      clearInterval(secondCheck);
-      running = false;
-      $("#idle").empty();
-      $("#status").empty();
-    });
+      $("#stop").click(function() {
+        clearInterval(secondCheck);
+        running = false;
+        $("#idle").empty();
+        $("#status").empty();
+      });
+    }
   }); //end of start click()
 });
